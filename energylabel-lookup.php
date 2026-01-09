@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Energy Label Lookup
- * Plugin URI: https://github.com/jpwebcreation/energylabel-lookup
+ * Plugin URI: https://github.com/JorisPaarde/energylabel-lookup
  * Description: A WordPress plugin to look up energy labels using the EP Online API. It supports postcode, house number, and addition inputs, and is compatible with Elementor Pro.
  * Version: 1.3.4
  * Author: JPWebCreation - Joris Paardekooper
