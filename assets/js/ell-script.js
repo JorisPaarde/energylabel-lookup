@@ -201,11 +201,30 @@ jQuery(document).ready(function($) {
         resultsHtml += '<div class="ell-info-cards">';
         
         // Type label card
+        var typeLabelText = '';
+        
+        // Check for basislabel/basisopname in soort_opname first
+        if (data.soort_opname) {
+            var soortOpnameLower = data.soort_opname.toLowerCase();
+            if (soortOpnameLower.indexOf('basis') !== -1 || soortOpnameLower.indexOf('basisopname') !== -1 || soortOpnameLower.indexOf('basislabel') !== -1) {
+                typeLabelText = data.soort_opname; // Use the exact value from API (e.g. "Basisopname")
+            }
+        }
+        
+        // Add vereenvoudigd info if available
         if (data.is_vereenvoudigd !== undefined) {
             var vereenvoudigdText = data.is_vereenvoudigd ? 'Ja' : 'Nee';
+            if (typeLabelText) {
+                typeLabelText += ' / Vereenvoudigd: ' + vereenvoudigdText;
+            } else {
+                typeLabelText = 'Vereenvoudigd: ' + vereenvoudigdText;
+            }
+        }
+        
+        if (typeLabelText) {
             resultsHtml += '<div class="ell-info-card">';
             resultsHtml += '<div class="ell-info-card-label">Type Label</div>';
-            resultsHtml += '<div class="ell-info-card-value">Vereenvoudigd: ' + vereenvoudigdText + '</div>';
+            resultsHtml += '<div class="ell-info-card-value">' + typeLabelText + '</div>';
             resultsHtml += '</div>';
         }
         
