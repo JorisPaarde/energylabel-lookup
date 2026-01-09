@@ -202,23 +202,30 @@ jQuery(document).ready(function($) {
         
         // Type label card
         var typeLabelText = '';
+        var isBasisOpname = false;
         
         // Check for basislabel/basisopname in soort_opname first
         if (data.soort_opname) {
             var soortOpnameLower = data.soort_opname.toLowerCase();
             if (soortOpnameLower.indexOf('basis') !== -1 || soortOpnameLower.indexOf('basisopname') !== -1 || soortOpnameLower.indexOf('basislabel') !== -1) {
                 typeLabelText = data.soort_opname; // Use the exact value from API (e.g. "Basisopname")
+                isBasisOpname = true;
             }
         }
         
-        // Add vereenvoudigd info if available
-        if (data.is_vereenvoudigd !== undefined) {
+        // Add vereenvoudigd info if available, but not if it's a basisopname
+        if (!isBasisOpname && data.is_vereenvoudigd !== undefined) {
             var vereenvoudigdText = data.is_vereenvoudigd ? 'Ja' : 'Nee';
             if (typeLabelText) {
                 typeLabelText += ' / Vereenvoudigd: ' + vereenvoudigdText;
             } else {
                 typeLabelText = 'Vereenvoudigd: ' + vereenvoudigdText;
             }
+        }
+        
+        // If it's a basisopname and also vereenvoudigd, show both
+        if (isBasisOpname && data.is_vereenvoudigd === true) {
+            typeLabelText = data.soort_opname + ' / Vereenvoudigd: Ja';
         }
         
         if (typeLabelText) {
